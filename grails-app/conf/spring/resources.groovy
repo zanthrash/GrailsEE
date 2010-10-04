@@ -12,21 +12,31 @@ beans = {
 	
 	logrAspect(grailsee.LogAspect)
 	
-	springMonitoringAspectInterceptor(org.springframework.aop.interceptor.PerformanceMonitorInterceptor, true){
-		loggerName = "grailsee.traceLogger"
-	}
+		
 	
 	testAspect(grailsee.LogAspect)
 	
+
+	
 	aop {
-		config("proxy-target-class":true) {
-			pointcut(id:"springMonitoringPointcut", expression:"execution(* grailsee..*.*(..))")
-			aspect( id : 'tester', ref: "testAspect") {
-				after method: "doSomething", "pointcut-ref":"springMonitoringPointcut"
-			}
+		config("proxy-target-class":false) {
+			pointcut(id:"interceptorPointcut", expression:"execution(* grailsee..*Service.*(..))")
+		
+			//aspect( id : 'tester', ref: "testAspect") {
+			//	after method: "doSomething", "pointcut-ref":"interceptorPointcut"
+			//}
 			
-			advisor( 'pointcut-ref': "springMonitoringPointcut", 'advice-ref':"springMonitoringAspectInterceptor") 
+
+			advisor( 'pointcut-ref': "interceptorPointcut", 'advice-ref':"preformanceMonitoringInterceptorAdvice") 
 		}
+	}
+	
+	preformanceMonitoringInterceptorAdvice(org.springframework.aop.interceptor.PerformanceMonitorInterceptor, true){
+		loggerName = "grailsee.performanceMonitor"
+	}
+	
+	simpleTraceInterceptorAdvice(org.springframework.aop.interceptor.SimpleTraceInterceptor) {
+		loggerName = "grailsee.SimpleTraceInterceptor"
 	}
 
 	

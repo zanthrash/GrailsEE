@@ -1,3 +1,5 @@
+import org.apache.log4j.DailyRollingFileAppender
+import org.apache.log4j.PatternLayout
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -63,15 +65,22 @@ log4j = {
     // Example of changing the log pattern for the default console
     // appender:
     //
+
+	def loggingRoot = System.getProperty('user.dir')
     appenders {
-    	console name:'stdout', layout:pattern(conversionPattern: '[%d{DATE}]  %-8p [%c{2}] %m%n')
+		def stdPattern = new PatternLayout(conversionPattern: '%d [%t] %-5p %c{2} %x - %m%n')
+    	console name:'stdout', layout: stdPattern
+		appender new DailyRollingFileAppender(name:'simpleTrace', layout: stdPattern, datePattern: "'.'yyyy-MM-dd", file:"${loggingRoot}/simpleTrace.log")
+		appender new DailyRollingFileAppender(name:'performanceMonitor', layout: stdPattern, datePattern: "'.'yyyy-MM-dd", file:"${loggingRoot}/performanceMonitor.log")
     }
 
-	trace 'org.springframework.aop.interceptor.PerformanceMonitorInterceptor'
-	warn 'org.springframework'
+
+
 
 	trace 'grails.app', 'grailsee.traceLogger'
 	
+	trace simpleTrace : 'grailsee.SimpleTraceInterceptor'
+	trace performanceMonitor : 'grailsee.performanceMonitor'
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
 	       'org.codehaus.groovy.grails.web.pages', //  GSP
