@@ -27,7 +27,7 @@ beans = {
 			//}
 			
 
-			advisor( 'pointcut-ref': "interceptorPointcut", 'advice-ref':"preformanceMonitoringInterceptorAdvice") 
+			advisor( 'pointcut-ref': "interceptorPointcut", 'advice-ref':"concurrencyThrottleInterceptor") 
 		}
 	}
 	
@@ -37,6 +37,10 @@ beans = {
 	
 	simpleTraceInterceptorAdvice(org.springframework.aop.interceptor.SimpleTraceInterceptor) {
 		loggerName = "grailsee.SimpleTraceInterceptor"
+	}
+	
+	concurrencyThrottleInterceptor(org.springframework.aop.interceptor.ConcurrencyThrottleInterceptor) {
+		concurrencyLimit = 2
 	}
 
 	
