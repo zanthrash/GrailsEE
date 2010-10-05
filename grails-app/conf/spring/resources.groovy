@@ -19,7 +19,7 @@ beans = {
 
 	
 	aop {
-		config("proxy-target-class":false) {
+		config {
 			pointcut(id:"interceptorPointcut", expression:"execution(* grailsee.*Service.*(..))")
 		
 			//aspect( id : 'tester', ref: "testAspect") {
@@ -44,4 +44,5 @@ beans = {
 	}
 
 	debugInterceptorAdvice(org.springframework.aop.interceptor.DebugInterceptor)
+	
 }
