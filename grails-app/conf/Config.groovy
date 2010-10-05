@@ -73,6 +73,7 @@ log4j = {
 		appender new DailyRollingFileAppender(name:'simpleTrace', layout: stdPattern, datePattern: "'.'yyyy-MM-dd", file:"${loggingRoot}/simpleTrace.log")
 		appender new DailyRollingFileAppender(name:'performanceMonitor', layout: stdPattern, datePattern: "'.'yyyy-MM-dd", file:"${loggingRoot}/performanceMonitor.log")
 		appender new DailyRollingFileAppender(name:'concurrancyThrottle', layout: stdPattern, datePattern: "'.'yyyy-MM-dd", file:"${loggingRoot}/concurrancyThrottle.log")
+		appender new DailyRollingFileAppender(name:'debugInterceptor', layout: stdPattern, datePattern: "'.'yyyy-MM-dd", file:"${loggingRoot}/debugInterceptor.log")
     }
 
 
@@ -80,9 +81,10 @@ log4j = {
 
 	trace 'grails.app', 'grailsee.traceLogger'
 	
-	trace simpleTrace : 'grailsee.SimpleTraceInterceptor'
-	trace performanceMonitor : 'grailsee.performanceMonitor'
-	trace concurrancyThrottle : 'org.springframework.aop.interceptor.ConcurrencyThrottleInterceptor'
+	trace simpleTrace : 'grailsee.SimpleTraceInterceptor', additivity: false
+	trace performanceMonitor : 'grailsee.performanceMonitor', additivity: false
+	trace concurrancyThrottle : 'org.springframework.aop.interceptor.ConcurrencyThrottleInterceptor', additivity:false
+	trace debugInterceptor : 'org.springframework.aop.interceptor.DebugInterceptor', additivity:false
 
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
 	       'org.codehaus.groovy.grails.web.pages', //  GSP

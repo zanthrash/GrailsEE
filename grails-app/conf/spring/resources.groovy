@@ -20,14 +20,14 @@ beans = {
 	
 	aop {
 		config("proxy-target-class":false) {
-			pointcut(id:"interceptorPointcut", expression:"execution(* grailsee..*Service.*(..))")
+			pointcut(id:"interceptorPointcut", expression:"execution(* grailsee.*Service.*(..))")
 		
 			//aspect( id : 'tester', ref: "testAspect") {
 			//	after method: "doSomething", "pointcut-ref":"interceptorPointcut"
 			//}
 			
 
-			advisor( 'pointcut-ref': "interceptorPointcut", 'advice-ref':"concurrencyThrottleInterceptor") 
+			advisor( 'pointcut-ref': "interceptorPointcut", 'advice-ref':"debugInterceptorAdvice") 
 		}
 	}
 	
@@ -43,5 +43,5 @@ beans = {
 		concurrencyLimit = 2
 	}
 
-	
+	debugInterceptorAdvice(org.springframework.aop.interceptor.DebugInterceptor)
 }
