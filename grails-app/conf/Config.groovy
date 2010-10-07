@@ -77,9 +77,6 @@ log4j = {
 		appender new DailyRollingFileAppender(name:'classLoaderInterceptor', layout: stdPattern, datePattern: "'.'yyyy-MM-dd", file:"${loggingRoot}/classLoaderInterceptor.log")
     }
 
-
-
-
 	trace 'grails.app', 'grailsee.traceLogger'
 	
 	trace simpleTrace : 'grailsee.SimpleTraceInterceptor', additivity: false
@@ -96,13 +93,12 @@ log4j = {
 	       'org.codehaus.groovy.grails.commons', // core / classloading
 	       'org.codehaus.groovy.grails.plugins', // plugins
 	       'org.codehaus.groovy.grails.orm.hibernate', // hibernate integration
-	       //'org.springframework',
+	       'org.springframework',
 	       'org.hibernate',
            'net.sf.ehcache.hibernate'
 
     warn   'org.mortbay.log'
 
-	
 }
 
 

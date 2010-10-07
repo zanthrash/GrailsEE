@@ -1,32 +1,15 @@
 import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator
 
 beans = {
-	
-/*	autoProxyCreator(AnnotationAwareAspectJAutoProxyCreator) {
-		proxyTargetClass = true
-	}*/
-	
 
-		
 	xmlns aop:"http://www.springframework.org/schema/aop"
 	
 	logrAspect(grailsee.LogAspect)
-	
-		
-	
 	testAspect(grailsee.LogAspect)
 	
-
-	
 	aop {
-		config {
+		config("proxy-target-class":true) {
 			pointcut(id:"interceptorPointcut", expression:"execution(* grailsee.*Service.*(..))")
-		
-			//aspect( id : 'tester', ref: "testAspect") {
-			//	after method: "doSomething", "pointcut-ref":"interceptorPointcut"
-			//}
-			
-
 			advisor( 'pointcut-ref': "interceptorPointcut", 'advice-ref':"debugInterceptorAdvice") 
 		}
 	}
